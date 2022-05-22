@@ -10,7 +10,14 @@ K0 = -0.03
 K = 0.06
 CL_max = 1.6
 rho0 = 1.225
-rhoT = [1.225,1.16727,1.11164,1.05807,1.00649,0.956859,0.909122,0.863229,0.819129,0.776775,0.736116,0.697106,0.659697,0.623844,0.589501,0.556624,0.525168,0.495090,0.466348,0.438901,0.412707,0.387725,0.363918,0.336327,0.310828,0.287262,0.265483,0.245355,0.226753,0.209562,0.193674]
+rhoT = [1.225,1.16727,1.11164,1.05807,1.00649,
+        0.956859,0.909122,0.863229,0.819129,
+        0.776775,0.736116,0.697106,0.659697,
+        0.623844,0.589501,0.556624,0.525168,
+        0.495090,0.466348,0.438901,0.412707,
+        0.387725,0.363918,0.336327,0.310828,
+        0.287262,0.265483,0.245355,0.226753,
+        0.209562,0.193674]
 
 def CLminforPR():
     cl = ((-math.sqrt((K0**2)+12*K*CD0))-K0) / ((-2)*K)
@@ -57,8 +64,7 @@ def VforminPR(r):
     return vm
 
 def RhoAbsCeiling():
-    rh = ((math.sqrt((2*(w**3))/s)*4*CD0*rho0)/((CL_max**(3/2))*PA_max_sea))**(2/3)
-    #rh = ((CD0/(CL_max**2)+K0/CL_max+1)*(2*(w**2)*rho0)*math.sqrt((s*CL_max)/(2*w))/(s*PA_max_sea))**(2/3)
+    rh = ((math.sqrt((2*(w**3))/s)*(CD0+K0*CLminforPR()+K*(CLminforPR()**2))*rho0)/((CLminforPR()**(3/2))*PA_max_sea))**(2/3)
     return rh
 
 
@@ -93,7 +99,7 @@ def fifthQ():
     plt.plot(h,rc)
     plt.title("Q5 - RC v h")
     plt.xlabel("h (m)")
-    plt.ylabel("Rate of Climb")
+    plt.ylabel("Rate of Climb (m/s)")
     plt.grid()
     plt.savefig("Q5_RC_v_h.png", dpi = 300, bbox_inches = "tight")
     plt.show()
@@ -146,7 +152,7 @@ def seventhQ():
     plt.plot(h,rc)
     plt.title("Q7 - V_EP_max v h")
     plt.xlabel("h (m)")
-    plt.ylabel("V_EP_max")
+    plt.ylabel("V_EP_max (m/s)")
     plt.grid()
     plt.savefig("Q7V_EP_max_v_h.png", dpi = 300, bbox_inches = "tight")
     plt.show()
